@@ -10,4 +10,15 @@ const client = new pg.Client({
   ssl      : settings.ssl
 });
 
-module.exports = lookup_people;
+const queryDB = (q, params, cb) => {
+  client.connect((err) =>{
+    if (err) {
+      return console.error("error", err);
+    }
+    client.query(q, params, cb)
+  })
+};
+
+module.exports = {
+  query: queryDB
+};
